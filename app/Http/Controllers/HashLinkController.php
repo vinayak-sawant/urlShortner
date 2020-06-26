@@ -22,12 +22,12 @@ class HashLinkController extends Controller
         ]);
 
         if (HashLink::where('link', '=', $request->link)->exists()) {
-        	return redirect('home')
+        	return redirect('/')
              ->with('warning', 'This link is already available in the system!');
 		}
    
         $hashlink['link'] = $request->link;
-        
+
         do
 	    {
 	        $code = Str::random($length = 6);
@@ -40,7 +40,7 @@ class HashLinkController extends Controller
    
         HashLink::create($hashlink);
   
-        return redirect('home')
+        return redirect('/')
              ->with('success', 'Hashed Link Generated Successfully!');
     }
 

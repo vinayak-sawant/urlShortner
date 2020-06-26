@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('home', 'HashLinkController@index');
+Route::get('/', 'HashLinkController@index');
 
 Route::post('generate-hash-link', 'HashLinkController@store')->name('submitLink');
    
