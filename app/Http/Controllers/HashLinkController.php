@@ -27,8 +27,7 @@ class HashLinkController extends Controller
 		}
    
         $hashlink['link'] = $request->link;
-        $hashlink['code'] = Str::random($length = 6);
-
+        
         do
 	    {
 	        $code = Str::random($length = 6);
@@ -36,11 +35,7 @@ class HashLinkController extends Controller
 	    }
 	    while(!$duplicate->isEmpty());
 
-        if (HashLink::where('code', '=', $hashlink['code'])->exists()) {
-        	return redirect('home')
-             ->with('warning', 'This link is already available in the system!');
-		}
-
+	    $hashlink['code'] = $code;
         $hashlink['counter'] = 0;
    
         HashLink::create($hashlink);
