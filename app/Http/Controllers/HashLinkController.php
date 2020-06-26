@@ -20,9 +20,27 @@ class HashLinkController extends Controller
         $request->validate([
            'link' => 'required|url'
         ]);
+
+        if (HashLink::where('link', '=', $request->link)->exists()) {
+        	return redirect('home')
+             ->with('warning', 'This link is already available in the system!');
+		}
    
         $hashlink['link'] = $request->link;
         $hashlink['code'] = Str::random($length = 6);
+
+        do
+	    {
+	        $code = Str::random($length = 6);
+	        $duplicate = HashLink::where('code', $code)->get();
+	    }
+	    while(!$duplicate->isEmpty());
+
+        if (HashLink::where('code', '=', $hashlink['code'])->exists()) {
+        	return redirect('home')
+             ->with('warning', 'This link is already available in the system!');
+		}
+
         $hashlink['counter'] = 0;
    
         HashLink::create($hashlink);
